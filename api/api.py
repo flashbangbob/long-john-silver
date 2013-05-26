@@ -1,15 +1,11 @@
-from flask import Flask, jsonify
+from flask import Blueprint, jsonify
 import MySQLdb as mdb
 import sys
 import json
 
 con = mdb.connect('localhost', 'flashbangbob', '5022', 'main'); 
-app = Flask(__name__)
-app.config.update(DEBUG=True)
-@app.route('/')
-def hello_world():
-        data = {"id": 5, "title": "Myworld"}
-        return jsonify(**data)
+Api= Blueprint('Api', __name__)
+
 
 @app.route('/user/')
 def get_users():
@@ -34,6 +30,3 @@ def get_users_by_name(username):
                 cur.execute("SELECT id, username, email FROM user WHERE username = %s", username)
                 rows = cur.fetchall()
                 return jsonify(users = rows)
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10080)
