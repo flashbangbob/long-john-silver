@@ -1,10 +1,10 @@
-from flask import Flask
-from api import Api
+from flask import Flask, jsonify
+from user_api import user_api
 
 app = Flask(__name__)
 app.config.update(DEBUG=True)
 
-app.register_blueprint(Api, url_prefix='/user')
+app.register_blueprint(user_api)
 
 @app.route('/')
 def hello_world():
