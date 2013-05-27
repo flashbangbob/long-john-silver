@@ -1,8 +1,7 @@
-import MySQLdb as mdb
-
-con = mdb.connect('localhost', 'flashbangbob', '5022', 'main')
+import dbconn
 
 def get_products():
+	con = dbconn.get_new_connection()
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
 		cur.execute("SELECT * FROM product")
@@ -10,6 +9,7 @@ def get_products():
 		return rows
 
 def get_product_by_id(id):
+	con = dbconn.get_new_connection()
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
 		cur.execute("SELECT * FROM product WHERE id = %s", id)

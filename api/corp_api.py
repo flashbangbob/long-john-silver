@@ -1,9 +1,9 @@
 import MySQLdb as mdb
 import shop_api
-
-con = mdb.connect('localhost', 'flashbangbob', '5022', 'main')
+import dbconn
 
 def get_corp_for_user_id(id):
+	con = dbconn.get_new_connection()
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
 		cur.execute("SELECT id, name, ticker, money, share_price FROM corporation WHERE id = %s", id)

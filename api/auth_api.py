@@ -1,10 +1,9 @@
-import MySQLdb as mdb
 import uuid
 import hashlib
-
-con = mdb.connect('localhost', 'flashbangbob', '5022', 'main')
+import dbconn
 
 def login(username, password):
+	con = dbconn.get_new_connection()
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
 		passwordhash = hashlib.sha224(password).hexdigest()
@@ -16,6 +15,7 @@ def login(username, password):
 		return False
 
 def create_session(userid):
+	con = dbconn.get_new_connection()
 	with con:
 		sessionid = str(uuid.uuid4())
 		cur = con.cursor(mdb.cursors.DictCursor)
@@ -24,12 +24,14 @@ def create_session(userid):
 		return sessionid
 		
 def destroy_session(sessionid):
+	con = dbconn.get_new_connection()
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
 		cur.execute("DELETE FROM sessions WHERE uuid = %s", sessionid)
 		return True
 
 def get_userid_from_session(sessionid):
+	con = dbconn.get_new_connection()
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
 		cur.execute("SELECT user_id FROM sessions WHERE uuid = %s", sessionid)
@@ -37,6 +39,7 @@ def get_userid_from_session(sessionid):
 		return rows['user_id']
 
 def is_valid_session(sessionid, userid):
+	con = dbconn.get_new_connection()
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
 		cur.execute("SELECT count(*) FROM sessions WHERE uuid = %s and user_id = %s", (sessionid, userid))
