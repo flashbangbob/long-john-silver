@@ -62,12 +62,14 @@ def get_users():
 @app.route('/user/<int:id>')
 def get_users_by_id(id):
 	row = user_api.get_users_by_id(id)
-    	return jsonify(users = row)
+	row['session'] = session['username']
+    return jsonify(users = row)
 
 @app.route('/user/<string:username>')
 def get_users_by_name(username):
 	row = user_api.get_users_by_name(username)
-    	return jsonify(users = row)
+	row['session'] = session['username']
+    return jsonify(users = row)
 
 '''
 RTE - SHOPTYPE
