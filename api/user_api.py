@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from corp_api import corp_api
 import MySQLdb as mdb
 import sys
 import json
@@ -19,13 +20,15 @@ def get_users_by_id(id):
         with con:
                 cur = con.cursor(mdb.cursors.DictCursor)
                 cur.execute("SELECT id, username, email FROM user WHERE id = %s", id)
-                rows = cur.fetchall()
-                return jsonify(users = rows)
+                row = cur.fetchone()
+                row['corp'] = corp_api.get_corp_for_user_id(row['id'])
+                return jsonify(users = row)
 
 @user_api.route('/user/<string:username>')
 def get_users_by_name(username):
         with con:
                 cur = con.cursor(mdb.cursors.DictCursor)
                 cur.execute("SELECT id, username, email FROM user WHERE username = %s", username)
-                rows = cur.fetchall()
-                return jsonify(users = rows)
+                row = cur.fetchone()
+                row['corp'] = corp_api.get_corp_for_user_id(row['id'])
+                return jsonify(users = row)
