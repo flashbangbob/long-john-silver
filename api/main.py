@@ -10,13 +10,14 @@ import json
 app = Flask(__name__)
 app.config.update(DEBUG=True)
 
+@app.before_request
+def before_request():
+    if 'sessionid' not in session and request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index':
+    	return redirect(url_for('login'))
+
 '''
 RTE - ROOT
-'''        
-
-if 'sessionid' not in session:
-	return 'Logged in as %s' % escape(session['sessionid'])
-
+'''
 @app.route('/')
 def index():
     if 'sessionid' in session and 'sessionid' != None:
@@ -26,7 +27,6 @@ def index():
 '''
 RTE - AUTH
 '''       
-
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -74,6 +74,7 @@ def get_users_by_id(id):
 
 @app.route('/user/<string:username>')
 def get_users_by_name(username):
+	
 	row = user_api.get_users_by_name(username)
 	row['session'] = session['username']
 	return jsonify(users = row)
