@@ -12,7 +12,7 @@ app.config.update(DEBUG=True)
 
 @app.before_request
 def before_request():
-    if 'sessionid' not in session and request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index':
+    if 'sessionid' not in session and 'userid' not in session and request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index':
     	return redirect(url_for('login'));
     else:
     	validsession = auth_api.is_valid_session(session['sessionid'], session['userid'])
