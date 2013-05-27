@@ -16,8 +16,8 @@ def before_request():
     	return redirect(url_for('login'));
     elif request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index' :
     	validsession = auth_api.is_valid_session(session['sessionid'], session['userid'])
-    	if not validsession:
-    		return redirect(url_for('login'));
+    	if validsession == False:
+		return redirect(url_for('logout'));
 
 '''
 RTE - ROOT
@@ -75,14 +75,11 @@ def get_users():
 @app.route('/user/<int:id>')
 def get_users_by_id(id):
 	row = user_api.get_users_by_id(id)
-	row['session'] = session['username']
 	return jsonify(users = row)
 
 @app.route('/user/<string:username>')
-def get_users_by_name(username):
-	
+def get_users_by_name(username):	
 	row = user_api.get_users_by_name(username)
-	row['session'] = session['username']
 	return jsonify(users = row)
 
 '''
@@ -100,7 +97,7 @@ RTE - PRODUCT
 '''
 
 @app.route('/product/')
-def get_shop_types():
+def get_products():
 	rows = product_api.get_products()
 	return jsonify(products = rows)
 

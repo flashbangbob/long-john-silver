@@ -45,11 +45,11 @@ def is_valid_session(sessionid, userid):
 	con = dbconn.get_new_connection()
 	with con:
 		cur = con.cursor()
-		cur.execute("SELECT count(*) FROM sessions WHERE session_id = %s and user_id = %s", (sessionid, userid))
+		cur.execute("SELECT count(*) as cnt FROM sessions WHERE session_id = %s and user_id = %s", (sessionid, userid))
 		row = cur.fetchone()
-		if row:
+		if row['cnt'] > 0:
 			return True
-		return None
+		return False
 		
 		
 		
