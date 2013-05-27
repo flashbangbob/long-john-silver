@@ -19,6 +19,13 @@ def get_corp_for_user_id(id):
 		rows = cur.fetchall()
 		return jsonify(corp = rows)
 		
+def get_corp_for_user_id_json(id):
+	with con:
+		cur = con.cursor(mdb.cursors.DictCursor)
+		cur.execute("SELECT id, name, ticker, money, share_price FROM corporation WHERE id = %s", id)
+		rows = cur.fetchall()
+		return json.dumps(rows)
+
 @app.route('/user/')
 def get_users():
 	with con:
@@ -33,7 +40,7 @@ def get_users_by_id(id):
                 cur = con.cursor(mdb.cursors.DictCursor)
                 cur.execute("SELECT id, username, email FROM user WHERE id = %s", id)
                 row = cur.fetchone()
-                row['corp'] = corp_api.get_corp_for_user_id(row['id'])
+                row['corp'] = get_corp_for_user_id_json(row['id'])
                 return jsonify(users = row)
 
 @app.route('/user/<string:username>')
@@ -42,7 +49,7 @@ def get_users_by_name(username):
                 cur = con.cursor(mdb.cursors.DictCursor)
                 cur.execute("SELECT id, username, email FROM user WHERE username = %s", username)
                 row = cur.fetchone()
-                row['corp'] = corp_api.get_corp_for_user_id(row['id'])
+                row['corp'] = get_corp_for_user_id_json(row['id'])
                 return jsonify(users = row)
 
 
