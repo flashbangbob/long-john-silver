@@ -8,7 +8,7 @@ def login(username, passwordhash):
 		cur = con.cursor(mdb.cursors.DictCursor)
 		cur.execute("SELECT id FROM user WHERE username = %s and password_hash = %s", [username, passwordhash])
 		row = cur.fetchone()
-		if row['id'] > 0:
+		if row['id']:
 			sessionid = create_session(row['id'])
 			return sessionid
 		return None
