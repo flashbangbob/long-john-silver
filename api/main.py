@@ -3,7 +3,7 @@ import user_api
 import corp_api
 import shop_type_api
 import product_api
-import login_api
+import auth_api
 import MySQLdb as mdb
 import json
 
@@ -13,7 +13,11 @@ app.config.update(DEBUG=True)
 @app.before_request
 def before_request():
     if 'sessionid' not in session and request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index':
-    	return redirect(url_for('login'))
+    	return redirect(url_for('login'));
+    else:
+    	validsession = auth_api.is_valid_session(session['sessionid'], session['userid'])
+    	if not validsession:
+    		return redirect(url_for('login'));
 
 '''
 RTE - ROOT
@@ -21,7 +25,7 @@ RTE - ROOT
 @app.route('/')
 def index():
     if 'sessionid' in session and 'sessionid' != None:
-        return 'Logged in as %s' % escape(session['sessionid'])
+        return 'Logged in as userID: %s' % escape(session['userid'])
     return 'You are not logged in'
 
 '''
@@ -30,9 +34,10 @@ RTE - AUTH
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-    	sessionid = login_api.login(request.form['username'], request.form['password'])
+    	sessionid = auth.api.login(request.form['username'], request.form['password'])
     	if sessionid:
         	session['sessionid'] = sessionid
+        	session['userid'] = auth_api.get_userid_from_session(sessionid)
         return redirect(url_for('index'))
     return '''
         <form action="" method="post">
@@ -45,6 +50,7 @@ def login():
 @app.route('/logout/')
 def logout():
     # remove the username from the session if it's there
+    auth_api.destroy_session(session['sessionid'])
     session.pop('sessionid', None)
     return redirect(url_for('index'))
 
