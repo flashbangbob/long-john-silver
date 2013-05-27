@@ -20,6 +20,7 @@ def create_session(userid):
 		sessionid = str(uuid.uuid4())
 		cur = con.cursor(mdb.cursors.DictCursor)
 		cur.execute("INSERT INTO sessions VALUES (%s, %s, NOW())", [sessionid, userid])
+		cur.close()
 		return sessionid
 		
 def destroy_session(sessionid):
@@ -31,14 +32,14 @@ def destroy_session(sessionid):
 def get_userid_from_session(sessionid):
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
-		cur.execute("SELECT user_id FROM session WHERE uuid = %s", sessionid)
+		cur.execute("SELECT user_id FROM sessions WHERE uuid = %s", sessionid)
 		rows = cur.fetchone()
 		return rows['user_id']
 
 def is_valid_session(sessionid, userid):
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
-		cur.execute("SELECT count(*) FROM session WHERE uuid = %s and user_id = %s", (sessionid, userid))
+		cur.execute("SELECT count(*) FROM sessions WHERE uuid = %s and user_id = %s", (sessionid, userid))
 		row = cur.fetchone()
 		if row:
 			return True

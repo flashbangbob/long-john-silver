@@ -34,7 +34,7 @@ RTE - AUTH
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-    	sessionid = auth.api.login(request.form['username'], request.form['password'])
+    	sessionid = auth_api.login(request.form['username'], request.form['password'])
     	if sessionid:
         	session['sessionid'] = sessionid
         	session['userid'] = auth_api.get_userid_from_session(sessionid)
