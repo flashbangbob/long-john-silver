@@ -14,9 +14,32 @@ RTE - ROOT
 '''        
 
 @app.route('/')
-def hello_world():
-        data = {"id": 5, "title": "Myworld"}
-        return jsonify(**data)
+def index():
+    if 'username' in session:
+        return 'Logged in as %s' % escape(session['username'])
+    return 'You are not logged in'
+
+'''
+RTE - AUTH
+'''       
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('index'))
+    return '''
+        <form action="" method="post">
+            <p><input type=text name=username>
+            <p><input type=submit value=Login>
+        </form>
+    '''
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 '''
 RTE - CORP
@@ -57,7 +80,7 @@ def get_shop_types():
 
 
 '''
-RTE - SHOPTYPE
+RTE - PRODUCT
 '''
 
 @app.route('/product/')
@@ -70,6 +93,7 @@ def get_shop_types():
 PROGRAMRUN
 '''
 app.secret_key = 'Wb \x85\x13\x94\x13\xb7z\xd5\xe3#(a\xe1\xf0\x07\xb2\xb1\xbbq\xf8\x888'
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10080)
 
