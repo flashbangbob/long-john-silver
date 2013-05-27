@@ -8,3 +8,10 @@ def get_products():
 		cur.execute("SELECT * FROM product")
 		rows = cur.fetchall()
 		return rows
+
+def get_product_by_id(id):
+	with con:
+		cur = con.cursor(mdb.cursors.DictCursor)
+		cur.execute("SELECT * FROM product WHERE id = %s", id)
+		rows = cur.fetchone()
+		return rows
