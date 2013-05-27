@@ -12,7 +12,7 @@ app.config.update(DEBUG=True)
 
 @app.before_request
 def before_request():
-    if 'sessionid' not in session and 'userid' not in session and request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index':
+    if ('sessionid' not in session or 'userid' not in session) and request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index':
     	return redirect(url_for('login'));
     elif request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index' :
     	validsession = auth_api.is_valid_session(session['sessionid'], session['userid'])
@@ -31,7 +31,7 @@ def index():
 '''
 RTE - AUTH
 '''       
-@app.route('/login/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
     	sessionid = auth_api.login(request.form['username'], request.form['password'])
@@ -47,7 +47,7 @@ def login():
         </form>
     '''
 
-@app.route('/logout/')
+@app.route('/logout')
 def logout():
     # remove the username from the session if it's there
     auth_api.destroy_session(session['sessionid'])
