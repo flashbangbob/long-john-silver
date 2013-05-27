@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import user_api
 import corp_api
 import shop_type_api
+import product_api
 import MySQLdb as mdb
 import json
 
@@ -53,6 +54,16 @@ RTE - SHOPTYPE
 def get_shop_types():
 	rows = shop_type_api.get_shop_types()
 	return jsonify(shop_types = rows)
+
+
+'''
+RTE - SHOPTYPE
+'''
+
+@app.route('/product/')
+def get_shop_types():
+	rows = product_api.get_products()
+	return jsonify(products = rows)
 
 
 '''
