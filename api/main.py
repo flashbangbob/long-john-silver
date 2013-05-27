@@ -4,7 +4,6 @@ import corp_api
 import shop_type_api
 import product_api
 import login_api
-import hashlib
 import MySQLdb as mdb
 import json
 

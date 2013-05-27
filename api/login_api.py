@@ -1,5 +1,6 @@
 import MySQLdb as mdb
 import uuid
+import hashlib
 
 con = mdb.connect('localhost', 'flashbangbob', '5022', 'main')
 
