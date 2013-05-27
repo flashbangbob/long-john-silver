@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 import MySQLdb as mdb
+import json
 
 app = Flask(__name__)
 app.config.update(DEBUG=True)
@@ -23,8 +24,8 @@ def get_corp_for_user_id_json(id):
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
 		cur.execute("SELECT id, name, ticker, money, share_price FROM corporation WHERE id = %s", id)
-		rows = cur.fetchall()
-		return json.dumps(rows)
+		rows = cur.fetchone()
+		return rows
 
 @app.route('/user/')
 def get_users():
