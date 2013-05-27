@@ -1,10 +1,11 @@
 from flask import Flask, jsonify
-from user_api import user_api
+import user_api, corp_api
 
 app = Flask(__name__)
 app.config.update(DEBUG=True)
 
 app.register_blueprint(user_api)
+app.register_blueprint(corp_api)
 
 @app.route('/')
 def hello_world():
