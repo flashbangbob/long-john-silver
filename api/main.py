@@ -3,6 +3,7 @@ import user_api
 import corp_api
 import shop_type_api
 import product_api
+import login_api
 import MySQLdb as mdb
 import json
 
@@ -15,30 +16,32 @@ RTE - ROOT
 
 @app.route('/')
 def index():
-    if 'username' in session:
-        return 'Logged in as %s' % escape(session['username'])
+    if 'sessionid' in session:
+        return 'Logged in as %s' % escape(session['sessionid'])
     return 'You are not logged in'
 
 '''
 RTE - AUTH
 '''       
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        session['username'] = request.form['username']
+    	sessionid = login_api.login(request.form['username'], request.form['password'])
+        session['sessionid'] = sessionid
         return redirect(url_for('index'))
     return '''
         <form action="" method="post">
             <p><input type=text name=username>
+            <p><input type=text name=password>
             <p><input type=submit value=Login>
         </form>
     '''
 
-@app.route('/logout')
+@app.route('/logout/')
 def logout():
     # remove the username from the session if it's there
-    session.pop('username', None)
+    session.pop('sessionid', None)
     return redirect(url_for('index'))
 
 '''
