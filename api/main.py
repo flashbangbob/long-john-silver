@@ -30,7 +30,8 @@ def login():
     if request.method == 'POST':
     	passwordhash = hashlib.sha224(request.form['password']).hexdigest()
     	sessionid = login_api.login(request.form['username'], passwordhash)
-        session['sessionid'] = sessionid
+    	if sessionid:
+        	session['sessionid'] = sessionid
         return redirect(url_for('index'))
     return '''
         <form action="" method="post">
