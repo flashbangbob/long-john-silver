@@ -49,7 +49,7 @@ def get_users_by_name(username):
 RTE - SHOPTYPE
 '''
 
-@app.route('/user/')
+@app.route('/shoptype/')
 def get_shop_types():
 	rows = shop_type_api.get_shop_types()
 	return jsonify(shop_types = rows)
