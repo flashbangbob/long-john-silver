@@ -4,6 +4,7 @@ import corp_api
 import shop_type_api
 import product_api
 import login_api
+import hashlib
 import MySQLdb as mdb
 import json
 
@@ -27,7 +28,8 @@ RTE - AUTH
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-    	sessionid = login_api.login(request.form['username'], request.form['password'])
+    	passwordhash = hashlib.sha224(request.form['password']).hexdigest()
+    	sessionid = login_api.login(request.form['username'], passwordhash)
         session['sessionid'] = sessionid
         return redirect(url_for('index'))
     return '''

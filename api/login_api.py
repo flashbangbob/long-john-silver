@@ -3,10 +3,10 @@ import uuid
 
 con = mdb.connect('localhost', 'flashbangbob', '5022', 'main')
 
-def login(username, password):
+def login(username, passwordhash):
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
-		cur.execute("SELECT id FROM user WHERE username = %s and password = %s", [username, password])
+		cur.execute("SELECT id FROM user WHERE username = %s and password_hash = %s", [username, passwordhash])
 		row = cur.fetchone()
 		if row['id'] > 0:
 			sessionid = create_session(row['id'])
