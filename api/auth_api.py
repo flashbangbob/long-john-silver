@@ -15,9 +15,6 @@ def login(username, password):
 			return True
 		return False
 
-def logout(sessionid):
-	
-
 def create_session(userid):
 	with con:
 		sessionid = str(uuid.uuid4())
@@ -38,7 +35,7 @@ def get_userid_from_session(sessionid):
 		rows = cur.fetchone()
 		return rows['user_id']
 
-def is_valid_session(sessionid, userid)
+def is_valid_session(sessionid, userid):
 	with con:
 		cur = con.cursor(mdb.cursors.DictCursor)
 		cur.execute("SELECT count(*) FROM session WHERE uuid = %s and user_id = %s", (sessionid, userid))
