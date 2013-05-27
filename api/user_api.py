@@ -1,4 +1,4 @@
-from corp_api import corp_api
+import corp_api
 import MySQLdb as mdb
 
 con = mdb.connect('localhost', 'flashbangbob', '5022', 'main')
@@ -16,7 +16,7 @@ def get_users_by_id(id):
                 cur.execute("SELECT id, username, email FROM user WHERE id = %s", id)
                 row = cur.fetchone()
                 row['corp'] = corp_api.get_corp_for_user_id(row['id'])
-        		return row
+      		return row
 
 def get_users_by_name(username):
         with con:

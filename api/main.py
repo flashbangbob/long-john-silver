@@ -25,12 +25,12 @@ def get_users():
 @app.route('/user/<int:id>')
 def get_users_by_id(id):
 	row = user_api.get_users_by_id(id)
-    return jsonify(users = row)
+    	return jsonify(users = row)
 
 @app.route('/user/<string:username>')
 def get_users_by_name(username):
-	row = user_api.get_users_by_username(username)
-    return jsonify(users = row)
+	row = user_api.get_users_by_name(username)
+    	return jsonify(users = row)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10080)
