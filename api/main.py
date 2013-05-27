@@ -17,7 +17,7 @@ RTE - ROOT
 
 @app.route('/')
 def index():
-    if 'sessionid' in session:
+    if 'sessionid' in session and 'sessionid' != None:
         return 'Logged in as %s' % escape(session['sessionid'])
     return 'You are not logged in'
 
