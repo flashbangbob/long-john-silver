@@ -69,7 +69,7 @@ def get_shop_types():
 '''
 PROGRAMRUN
 '''
-
+app.secret_key = 'Wb \x85\x13\x94\x13\xb7z\xd5\xe3#(a\xe1\xf0\x07\xb2\xb1\xbbq\xf8\x888'
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10080)
 
