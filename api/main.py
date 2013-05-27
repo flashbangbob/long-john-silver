@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
-import user_api, corp_api
+from user_api import user_api
+from corp_api import corp_api
 
 app = Flask(__name__)
 app.config.update(DEBUG=True)

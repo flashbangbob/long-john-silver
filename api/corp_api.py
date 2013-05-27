@@ -3,7 +3,7 @@ import MySQLdb as mdb
 import sys
 import json
 
-con = mdb.connect('localhost', 'flashbangbob', '5022', 'main'); 
+con = mdb.connect('localhost', 'flashbangbob', '5022', 'main')
 corp_api = Blueprint('corp_api', __name__)
 
 @corp_api.route('/corp/<int:id>')
