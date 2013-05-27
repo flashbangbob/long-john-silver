@@ -14,6 +14,9 @@ app.config.update(DEBUG=True)
 RTE - ROOT
 '''        
 
+if 'sessionid' not in session:
+	return 'Logged in as %s' % escape(session['sessionid'])
+
 @app.route('/')
 def index():
     if 'sessionid' in session and 'sessionid' != None:
