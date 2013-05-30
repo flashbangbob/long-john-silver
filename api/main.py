@@ -12,6 +12,9 @@ app.config.update(DEBUG=True)
 
 @app.before_request
 def before_request():
+	if request.remote_addr == 'localhost'
+		return;
+		
     if ('sessionid' not in session or 'userid' not in session) and request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index':
     	return redirect(url_for('login'));
     elif request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index' :
