@@ -13,15 +13,15 @@ app.config.update(DEBUG=True)
 
 @app.before_request
 def before_request():
-	if request.remote_addr == '127.0.0.1':
-		return
-		
+    if request.remote_addr == '127.0.0.1':
+        return
+        
     if ('sessionid' not in session or 'userid' not in session) and request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index':
-    	return redirect(url_for('login'))
+        return redirect(url_for('login'))
     elif request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index' :
-    	validsession = auth_api.is_valid_session(session['sessionid'], session['userid'])
-    	if validsession == False:
-		  return redirect(url_for('logout'))
+        validsession = auth_api.is_valid_session(session['sessionid'], session['userid'])
+        if validsession == False:
+          return redirect(url_for('logout'))
 
 '''
 RTE - ROOT
@@ -38,10 +38,10 @@ RTE - AUTH
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-    	sessionid = auth_api.login(request.form['username'], request.form['password'])
-    	if sessionid:
-        	session['sessionid'] = sessionid
-        	session['userid'] = auth_api.get_userid_from_session(sessionid)
+        sessionid = auth_api.login(request.form['username'], request.form['password'])
+        if sessionid:
+            session['sessionid'] = sessionid
+            session['userid'] = auth_api.get_userid_from_session(sessionid)
             session['corpid'] = corp_api.get_corp_for_user_id(session['userid'])
         return redirect(url_for('index'))
     return '''
@@ -65,8 +65,8 @@ RTE - CORP
 
 @app.route('/corp/<int:id>')
 def get_corp_for_user_id(id):
-	corp = corp_api.get_corp_by_id(id)
-	return jsonify(corp=corp)
+    corp = corp_api.get_corp_by_id(id)
+    return jsonify(corp=corp)
 
 '''
 RTE - USERS
@@ -74,18 +74,18 @@ RTE - USERS
 
 @app.route('/user/')
 def get_users():
-	rows = user_api.get_users()
-	return jsonify(users = rows)
+    rows = user_api.get_users()
+    return jsonify(users = rows)
 
 @app.route('/user/<int:id>')
 def get_users_by_id(id):
-	row = user_api.get_user_by_id(id)
-	return jsonify(users = row)
+    row = user_api.get_user_by_id(id)
+    return jsonify(users = row)
 
 @app.route('/user/<string:username>')
-def get_users_by_name(username):	
-	row = user_api.get_user_by_name(username)
-	return jsonify(users = row)
+def get_users_by_name(username):    
+    row = user_api.get_user_by_name(username)
+    return jsonify(users = row)
 
 '''
 RTE - SHOPTYPE
@@ -93,8 +93,8 @@ RTE - SHOPTYPE
 
 @app.route('/shoptype/')
 def get_shop_types():
-	rows = shop_type_api.get_shop_types()
-	return jsonify(shop_types = rows)
+    rows = shop_type_api.get_shop_types()
+    return jsonify(shop_types = rows)
 
 '''
 RTE - SHARES
@@ -112,8 +112,8 @@ RTE - PRODUCT
 
 @app.route('/product/')
 def get_products():
-	rows = product_api.get_products()
-	return jsonify(products = rows)
+    rows = product_api.get_products()
+    return jsonify(products = rows)
 
 
 '''
