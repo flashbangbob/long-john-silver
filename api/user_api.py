@@ -16,7 +16,7 @@ def get_user_by_id(id):
         cur.execute("SELECT id, username, email FROM user WHERE id = %s", id)
         row = cur.fetchone()
         row['corp'] = corp_api.get_corp_for_user_id(row['id'])
-          return row
+        return row
 
 def get_user_by_name(username):
     con = dbconn.get_new_connection()
