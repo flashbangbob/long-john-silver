@@ -13,7 +13,7 @@ app.config.update(DEBUG=True)
 
 @app.before_request
 def before_request():
-	if request.remote_addr == 'localhost'
+	if request.remote_addr == '127.0.0.1'
 		return;
 		
     if ('sessionid' not in session or 'userid' not in session) and request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index':
