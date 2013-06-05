@@ -42,7 +42,7 @@ def login():
         if sessionid:
             session['sessionid'] = sessionid
             session['userid'] = auth_api.get_userid_from_session(sessionid)
-            session['corpid'] = corp_api.get_corp_for_user_id(session['userid'])
+            session['corpid'] = corp_api.get_corp_by_id(session['userid'])
         return redirect(url_for('index'))
     return '''
         <form action="" method="post">
