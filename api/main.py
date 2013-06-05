@@ -41,6 +41,7 @@ def login():
     	if sessionid:
         	session['sessionid'] = sessionid
         	session['userid'] = auth_api.get_userid_from_session(sessionid)
+            session['corpid'] = corp_api.get_corp_for_user_id(session['userid'])
         return redirect(url_for('index'))
     return '''
         <form action="" method="post">
@@ -63,7 +64,7 @@ RTE - CORP
 
 @app.route('/corp/<int:id>')
 def get_corp_for_user_id(id):
-	corp = corp_api.get_corp_for_user_id(id)
+	corp = corp_api.get_corp_by_id(id)
 	return jsonify(corp=corp)
 
 '''
@@ -77,12 +78,12 @@ def get_users():
 
 @app.route('/user/<int:id>')
 def get_users_by_id(id):
-	row = user_api.get_users_by_id(id)
+	row = user_api.get_user_by_id(id)
 	return jsonify(users = row)
 
 @app.route('/user/<string:username>')
 def get_users_by_name(username):	
-	row = user_api.get_users_by_name(username)
+	row = user_api.get_user_by_name(username)
 	return jsonify(users = row)
 
 '''

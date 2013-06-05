@@ -9,7 +9,7 @@ def get_users():
 		rows = cur.fetchall()
 		return rows
 
-def get_users_by_id(id):
+def get_user_by_id(id):
 	con = dbconn.get_new_connection()
 	with con:
 		cur = con.cursor()	
@@ -18,7 +18,8 @@ def get_users_by_id(id):
         row['corp'] = corp_api.get_corp_for_user_id(row['id'])
       	return row
 
-def get_users_by_name(username):
+def get_user_by_name(username):
+	con = dbconn.get_new_connection()
     with con:
         cur = con.cursor()
         cur.execute("SELECT id, username, email FROM user WHERE username = %s", username)

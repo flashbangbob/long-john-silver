@@ -2,7 +2,7 @@ import MySQLdb as mdb
 import shop_api
 import dbconn
 
-def get_corp_for_user_id(id):
+def get_corp_by_id (id):
 	con = dbconn.get_new_connection()
 	with con:
 		cur = con.cursor()
