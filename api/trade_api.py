@@ -33,12 +33,11 @@ def sell_stock(sellingCorpId, targetCorpId, quantity):
 
 	totalAmount = targetCorpSharePrice * quantity
 
-	if quantity >= quantityOfShares:
+	if quantityOfShares >= quantity:
 		con = dbconn.get_new_connection()
 		with con:
 			cur = con.cursor()
-			for x in range(0,quantity):
-				cur.execute("DELETE FROM shares WHERE corporation_id = %s AND owning_corporation_id = %s", (targetCorpId, sellingCorpId))
+			cur.execute("DELETE FROM shares WHERE corporation_id = %s AND owning_corporation_id = %s LIMIT %s", (targetCorpId, sellingCorpId, quantity))
 			cur.execute("UPDATE corporation SET money = money + %s WHERE id = %s", (totalAmount, sellingCorpId))
 			cur.execute("UPDATE corporation SET momentum  = momentum - %s WHERE id = %s", (quantity, targetCorpId))
 		
