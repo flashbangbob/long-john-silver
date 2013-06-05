@@ -4,6 +4,7 @@ import corp_api
 import shop_type_api
 import product_api
 import auth_api
+import shares_api
 import MySQLdb as mdb
 import json
 
@@ -94,6 +95,15 @@ RTE - SHOPTYPE
 def get_shop_types():
 	rows = shop_type_api.get_shop_types()
 	return jsonify(shop_types = rows)
+
+'''
+RTE - SHARES
+'''
+
+@app.route('/shares/')
+def get_shop_types():
+    rows = shares_api.get_all_shares_for_corp_id(session['corpid'])
+    return jsonify(shares = rows)
 
 
 '''
