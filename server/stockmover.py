@@ -6,5 +6,5 @@ con = dbconn.get_new_connection()
 for x in range(0,12):
     with con:
         cur = con.cursor()
-        cur.execute("UPDATE corporation SET share_price = share_price * (1 + ((RAND() - .5) / 1000))")
+        cur.execute("UPDATE corporation SET share_price = share_price * (1 + (((RAND() - 0.5) + (momentum / 250)) / 1000))")
     time.sleep(5)

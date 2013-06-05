@@ -19,7 +19,7 @@ def buy_stock(buyingCorpId, targetCorpId, quantity):
 			for x in range(0,quantity):
 				cur.execute("INSERT INTO shares VALUES (%s, %s, NOW())", (targetCorpId, buyingCorpId))
 			cur.execute("UPDATE corporation SET money = money - %s WHERE id = %s", (totalAmount, buyingCorpId))
-			cur.execute("UPDATE corporation SET momentum  = momentum + %s WHERE id = %s", (quantity, targetCorpId))
+			cur.execute("UPDATE corporation SET momentum = momentum - %s WHERE id = %s", (quantity, targetCorpId))
 
 def sell_stock(sellingCorpId, targetCorpId, quantity):
 	sellerCorp = corp_api.get_corp_by_id(sellingCorpId)
@@ -33,12 +33,12 @@ def sell_stock(sellingCorpId, targetCorpId, quantity):
 
 	totalAmount = targetCorpSharePrice * quantity
 
-	if quantityOfShares >= quantity:
+	if quantityOfShares >= quantity
 		con = dbconn.get_new_connection()
 		with con:
 			cur = con.cursor()
 			cur.execute("DELETE FROM shares WHERE corporation_id = %s AND owning_corporation_id = %s LIMIT %s", (targetCorpId, sellingCorpId, quantity))
 			cur.execute("UPDATE corporation SET money = money + %s WHERE id = %s", (totalAmount, sellingCorpId))
-			cur.execute("UPDATE corporation SET momentum  = momentum - %s WHERE id = %s", (quantity, targetCorpId))
+			cur.execute("UPDATE corporation SET momentum = momentum + %s WHERE id = %s", (quantity, targetCorpId))
 		
 
