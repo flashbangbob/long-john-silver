@@ -17,8 +17,8 @@ def buy_stock(buyingCorpId, targetCorpId, quantity):
 		with con:
 			cur = con.cursor()
 			for x in range(0,quantity):
-	        	cur.execute("INSERT INTO shares VALUES (%s, %s, NOW())", (targetCorpId, buyingCorpId))
-	        cur.execute("UPDATE corporation SET money = money - %s WHERE id = %s", (totalAmount, buyingCorpId))
+	        		cur.execute("INSERT INTO shares VALUES (%s, %s, NOW())", (targetCorpId, buyingCorpId))
+	        	cur.execute("UPDATE corporation SET money = money - %s WHERE id = %s", (totalAmount, buyingCorpId))
 			cur.execute("UPDATE corporation SET momentum  = momentum + %s WHERE id = %s", (quantity, targetCorpId))
 
 def sell_stock(sellingCorpId, targetCorpId, quantity):
@@ -38,8 +38,8 @@ def sell_stock(sellingCorpId, targetCorpId, quantity):
 		with con:
 			cur = con.cursor()
 			for x in range(0,quantity):
-	        	cur.execute("DELETE FROM shares WHERE corporation_id = %s AND owning_corporation_id = %s", (targetCorpId, sellingCorpId))
-	        cur.execute("UPDATE corporation SET money = money + %s WHERE id = %s", (totalAmount, sellingCorpId))
+	        		cur.execute("DELETE FROM shares WHERE corporation_id = %s AND owning_corporation_id = %s", (targetCorpId, sellingCorpId))
+	        	cur.execute("UPDATE corporation SET money = money + %s WHERE id = %s", (totalAmount, sellingCorpId))
 			cur.execute("UPDATE corporation SET momentum  = momentum - %s WHERE id = %s", (quantity, targetCorpId))
 		
 
