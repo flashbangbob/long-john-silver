@@ -25,8 +25,8 @@ def sell_stock(sellingCorpId, targetCorpId, quantity):
 	sellerCorp = corp_api.get_corp_by_id(sellingCorpId)
 	sellerMoney = sellerCorp['money']
 
-	sellerShares = shares_api.get_shares_for_corp_id(sellingCorpId)
-	quantityOfShares = sellerShares[targetCorpId]['quantity']
+	sellerShares = shares_api.get_corp_shares_for_corp_id(sellingCorpId, targetCorpId)
+	quantityOfShares = sellerShares['quantity']
 
 	targetCorp = corp_api.get_corp_by_id(targetCorpId)
 	targetCorpSharePrice = targetCorp['share_price']
