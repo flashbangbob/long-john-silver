@@ -13,15 +13,15 @@ app.config.update(DEBUG=True)
 
 @app.before_request
 def before_request():
-	if request.remote_addr == "127.0.0.1":
+	if request.remote_addr == '127.0.0.1':
 		return
 		
     if ('sessionid' not in session or 'userid' not in session) and request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index':
-    	return redirect(url_for('login'));
+    	return redirect(url_for('login'))
     elif request.endpoint != 'login' and request.endpoint != 'logout' and request.endpoint != 'index' :
     	validsession = auth_api.is_valid_session(session['sessionid'], session['userid'])
     	if validsession == False:
-		return redirect(url_for('logout'))
+		  return redirect(url_for('logout'))
 
 '''
 RTE - ROOT
