@@ -15,7 +15,7 @@ def get_user_by_id(id):
         cur = con.cursor()    
         cur.execute("SELECT id, username, email FROM user WHERE id = %s", id)
         row = cur.fetchone()
-        row['corp'] = corp_api.get_corp_for_user_id(row['id'])
+        row['corp'] = corp_api.get_corp_by_id(row['id'])
         return row
 
 def get_user_by_name(username):
@@ -24,5 +24,5 @@ def get_user_by_name(username):
         cur = con.cursor()
         cur.execute("SELECT id, username, email FROM user WHERE username = %s", username)
         row = cur.fetchone()
-        row['corp'] = corp_api.get_corp_for_user_id(row['id'])
+        row['corp'] = corp_api.get_corp_by_id(row['id'])
         return row;
