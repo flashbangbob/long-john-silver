@@ -10,7 +10,7 @@ def buy_stock(buyingCorpId, targetCorpId, quantity):
     targetCorp = corp_api.get_corp_by_id(targetCorpId)
     targetCorpSharePrice = targetCorp['share_price']
 
-    totalAmount = targetCorpSharePrice * quantity
+    totalAmount = targetCorpSharePrice * int(quantity)
 
     if buyerMoney >= totalAmount:
         con = dbconn.get_new_connection()
@@ -31,7 +31,7 @@ def sell_stock(sellingCorpId, targetCorpId, quantity):
     targetCorp = corp_api.get_corp_by_id(targetCorpId)
     targetCorpSharePrice = targetCorp['share_price']
 
-    totalAmount = targetCorpSharePrice * quantity
+    totalAmount = targetCorpSharePrice * int(quantity)
 
     if quantityOfShares >= quantity:
         con = dbconn.get_new_connection()
