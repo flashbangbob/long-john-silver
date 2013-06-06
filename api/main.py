@@ -119,7 +119,7 @@ def trade_stock():
         trade_api.sell_stock(session['corpid'], targetCorpId, quantity)
     else:
         trade_api.buy_stock(session['corpid'], targetCorpId, quantity)
-    return redirect(url_for('shares'))
+    return get_shares()
 
 
 '''

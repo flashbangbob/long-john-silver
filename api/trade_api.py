@@ -17,7 +17,7 @@ def buy_stock(buyingCorpId, targetCorpId, quantity):
         with con:
             cur = con.cursor()
             for x in range(0,quantity):
-                cur.execute("INSERT INTO shares VALUES (null, %s, %s, NOW())", (targetCorpId, buyingCorpId))
+                cur.execute("INSERT INTO shares VALUES (null, %s, %s, %s, NOW())", (targetCorpId, buyingCorpId, targetCorpSharePrice))
             cur.execute("UPDATE corporation SET money = money - %s WHERE id = %s", (totalAmount, buyingCorpId))
             cur.execute("UPDATE corporation SET momentum = momentum - %s WHERE id = %s", (quantity, targetCorpId))
 
