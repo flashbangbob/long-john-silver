@@ -4,4 +4,4 @@ import dbconn
 con = dbconn.get_new_connection()
 with con:
     cur = con.cursor()
-    cur.execute("UPDATE corporation SET momentum = momentum - sign(momentum) where is_npc = 0 ")
+    cur.execute("UPDATE corporation SET momentum = momentum - sign(momentum)")
