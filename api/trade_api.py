@@ -33,7 +33,7 @@ def sell_stock(sellingCorpId, targetCorpId, quantity):
 
     totalAmount = targetCorpSharePrice * quantity
 
-    if quantityOfShares >= quantity
+    if quantityOfShares >= quantity:
         con = dbconn.get_new_connection()
         with con:
             cur = con.cursor()
