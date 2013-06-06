@@ -112,7 +112,7 @@ RTE - TRADE
 
 @app.route('/trade/')
 def trade_stock():
-    action = int(request.args.get('action', ''))
+    action = request.args.get('action', '')
     targetCorpId = int(request.args.get('corpid', ''))
     quantity = int(request.args.get('quantity', ''))
     if action == "sell":
