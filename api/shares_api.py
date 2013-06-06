@@ -5,7 +5,8 @@ def get_all_shares_for_corp_id(id):
     con = dbconn.get_new_connection()
     with con:
         cur = con.cursor()
-        cur.execute("""SELECT corporation_id, count(*) as quantity, avg(purchase_price) as purchase_price, c.share_price, avg(purchase_price) - c.share_price as net_gain
+        cur.execute("""SELECT corporation_id, count(*) as quantity, avg(purchase_price) as purchase_price, 
+                        c.share_price, (c.share_price - avg(purchase_price)) * count(*) as net_gain
                         FROM shares s
                         JOIN corporation c on c.id = s.corporation_id WHERE owning_corporation_id = %s GROUP BY corporation_id""", id)
         rows = cur.fetchall()
