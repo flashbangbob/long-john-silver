@@ -5,6 +5,7 @@ import shop_type_api
 import product_api
 import auth_api
 import shares_api
+import trade_api
 import MySQLdb as mdb
 import json
 
@@ -101,9 +102,24 @@ RTE - SHARES
 '''
 
 @app.route('/shares/')
-def get_shop_types():
+def get_shares():
     rows = shares_api.get_all_shares_for_corp_id(session['corpid'])
     return jsonify(shares = rows)
+
+'''
+RTE - TRADE
+'''
+
+@app.route('/trade/')
+def trade_stock():
+    action = request.args.get('action', '')
+    targetCorpId = request.args.get('corpid', '')
+    quantity = request.args.get('quantity', '')
+    if action == "sell":
+        trade_api.sell_stock(session['corpid'], targetCorpId, quantity)
+    else:
+        trade_api.buy_stock(session['corpid'], targetCorpId, quantity)
+    return redirect(url_for('shares'))
 
 
 '''
